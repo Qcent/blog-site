@@ -8,10 +8,10 @@ const helpers = require('./utils/helpers');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-//const exphbs = require('express-handlebars');
-//const hbs = exphbs.create({ helpers });
-//app.engine('handlebars', hbs.engine);
-//app.set('view engine', 'handlebars');
+const exphbs = require('express-handlebars');
+const hbs = exphbs.create({ helpers });
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
