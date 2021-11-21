@@ -1,11 +1,25 @@
-<article class="post">
-    <div class="title">
-        <a href="/post/{{id}}" target="_blank">{{title}}</a>
-        <span>({{ post_content}})</span>
-    </div>
-    <div class="meta">
-        {{vote_count}} {{format_plural "point" vote_count}} by {{user.username}} on {{format_date created_at}}
-        |
-        <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+<article class="article">
+    <div class="post-container">
+        <div class="post-head">{{user.username}} on {{format_date created_at}}</div>
+        {{#unless view}}
+        <a class='post-link' href="/post/{{id}}" target="_blank">
+            {{/unless}}
+            <section class="post-body">
+                <h2 class="title">
+                    {{title}}
+                </h2>
+                <p class="content">
+                    {{ post_content}}
+                </p>
+            </section>
+            {{#unless view}}
+        </a>
+        {{/unless}}
+        <div class="post-foot">
+            <img data='{{id}}' class='post-upvote upvote-btn'>{{pos_count}}
+            <img data='{{id}}' class='post-downvote downvote-btn'>{{neg_count}}
+            |
+            <a class='nochange' href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+        </div>
     </div>
 </article>

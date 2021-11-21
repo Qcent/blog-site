@@ -1,7 +1,10 @@
-<ol class="post-list">
+<section class="post-list">
     {{#each posts as |post|}}
-    <li>
-        {{> post-info post }}
-    </li>
+
+    {{> post-info post }}
+
     {{/each}}
-</ol>
+</section>
+{{#if session.loggedIn}}
+<script src="/javascript/upvote.js"></script>
+{{/if}}

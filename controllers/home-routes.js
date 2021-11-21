@@ -10,7 +10,8 @@ router.get('/', (req, res) => {
                 'id',
                 'post_content',
                 'title',
-                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
             ],
             include: [{
                     model: Comment,
@@ -50,7 +51,8 @@ router.get('/post/:id', (req, res) => {
                 'id',
                 'post_content',
                 'title',
-                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive )'), 'pos_count'],
             ],
             include: [{
                     model: Comment,
@@ -75,6 +77,8 @@ router.get('/post/:id', (req, res) => {
             // serialize the data
             const post = dbPostData.get({ plain: true });
 
+            //specify single post to prevent link generation
+            post.view = 1;
             // pass data to template
             res.render('single-post', { post, session: req.session });
         })

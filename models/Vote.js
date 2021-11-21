@@ -24,6 +24,9 @@ Vote.init({
             model: 'post',
             key: 'id'
         }
+    },
+    positive: {
+        type: DataTypes.BOOLEAN
     }
 }, {
     sequelize,

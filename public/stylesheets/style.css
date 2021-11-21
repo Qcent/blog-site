@@ -1,0 +1,255 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body,
+html {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    color: #333;
+    background-color: #F3F0D7;
+}
+
+header {
+    padding: 2rem 9rem 0;
+    height: 8rem;
+    background-color: #ADC2A9;
+    margin-bottom: 2rem;
+    background-image: url(https://www.svgrepo.com/show/185785/blog.svg);
+    background-repeat: no-repeat;
+    background-position-x: .5%;
+}
+
+header .title {
+    color: rgb(39, 105, 204);
+}
+
+nav a {
+    padding-right: 1rem;
+    text-decoration: none;
+    color: rgb(95, 147, 226);
+}
+
+nav a:visited {
+    color: rgb(95, 147, 226);
+}
+
+header h1 a {
+    text-decoration: none;
+    margin-top: .5rem;
+}
+
+.login-container,
+.new-post-container,
+.post-container {
+    margin: 1rem auto;
+    width: 75vw;
+    max-width: 800px;
+    background-color: #FEF5ED;
+    border: 1px solid #99A799;
+    border-radius: 3px;
+}
+
+.post-head {
+    background-color: #D3E4CD;
+    padding: .2rem 0;
+}
+
+.login-body,
+.post-body {
+    padding: 0;
+    border: 3px solid #99A799;
+}
+
+a:hover>.post-body {
+    border: 3px solid rgb(219, 152, 64);
+    border-radius: 3px;
+}
+
+.login-body .content,
+.post-body .content {
+    margin: .6rem;
+    color: #5E454B;
+}
+
+.post-link {
+    text-decoration: none;
+}
+
+.post-link:hover {
+    border: 3px solid rgb(219, 152, 64);
+    border-radius: 3px;
+}
+
+.login-body .title,
+.post-body .title {
+    padding: .3rem;
+    font-size: 1.4rem;
+    color: rgb(39, 105, 204);
+    background-color: #99A799;
+}
+
+.login-foot,
+.post-foot {
+    text-align: right;
+    padding: .2rem;
+    background-color: #D3E4CD;
+}
+
+.downvote-btn,
+.upvote-btn {
+    cursor: pointer;
+}
+
+.post-upvote,
+.post-downvote {
+    content: url(https://www.svgrepo.com/show/63920/up-arrow-symbol-in-a-circle.svg);
+    width: 1rem;
+    height: 1rem;
+    padding-right: .1rem;
+    position: relative;
+    top: .11rem;
+    filter: invert(48%) sepia(87%) saturate(3830%) hue-rotate(207deg) brightness(101%) contrast(92%);
+}
+
+.post-downvote {
+    transform: rotate(180deg) scaleX(-1);
+    filter: invert(71%) sepia(29%) saturate(6116%) hue-rotate(332deg) brightness(100%) contrast(93%);
+}
+
+footer {
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+    font-size: 110%;
+    background-image: url(https://www.svgrepo.com/show/185785/blog.svg);
+    background-repeat: no-repeat;
+    background-position-x: 58%;
+}
+
+
+/* USER LOGIN / SIGNUP PAGE */
+
+.login-container {
+    width: 32rem;
+}
+
+.nochange {
+    text-decoration: none;
+    color: rgb(95, 147, 226);
+}
+
+.nochange:visited {
+    color: rgb(95, 147, 226);
+}
+
+.user-login-btn {
+    margin-left: 14.5rem;
+    margin-bottom: 1rem;
+    padding: .4rem 2rem;
+}
+
+.content.user-login div {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+
+.content.user-login label {
+    text-align: right;
+    width: 18%;
+}
+
+.content.user-login input {
+    width: 45%;
+    margin-left: 1rem;
+}
+
+
+/* NEW POST FORM */
+
+.new-post-container {
+    width: 40rem;
+}
+
+.new-post-form {
+    padding-top: 1rem;
+}
+
+.new-post-form div {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+
+.new-post-form label {
+    text-align: right;
+    width: 6rem;
+}
+
+.new-post-form input {
+    width: 45%;
+    margin-left: 1rem;
+}
+
+.new-post-form #post-content {
+    width: 30rem;
+    height: 10rem;
+    margin-left: 1rem;
+    resize: none;
+}
+
+.new-post-btn {
+    margin: 1rem 17rem;
+    padding: .4rem 2rem;
+}
+
+
+/* COMMENT FORM */
+
+.comment-form {
+    margin: 1rem auto;
+    padding: .5rem 1rem;
+    width: 75vw;
+    max-width: 800px;
+    background-color: #FEF5ED;
+    border: 1px solid #99A799;
+    border-radius: 3px;
+}
+
+#comment-body {
+    width: 100%;
+    height: 10rem;
+    padding: .2rem;
+    resize: none;
+}
+
+.add-comment-btn {
+    margin: 1rem 19rem;
+    padding: .4rem 2rem;
+}
+
+
+/* COMMENTS */
+
+.comments .comment {
+    margin: .1rem auto;
+    width: 75vw;
+    max-width: 800px;
+    background-color: #FEF5ED;
+    border: 1px solid #99A799;
+    border-radius: 3px;
+}
+
+.comment:nth-child(odd) {
+    background-color: #D3E4CD;
+}
+
+.comment .text {
+    padding: .1rem 1.5rem;
+}

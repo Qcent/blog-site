@@ -5,7 +5,8 @@ class Post extends Model {
     static upvote(body, models) {
         return models.Vote.create({
             user_id: body.user_id,
-            post_id: body.post_id
+            post_id: body.post_id,
+            positive: body.positive
         }).then(() => {
             return Post.findOne({
                 where: {
@@ -23,7 +24,6 @@ class Post extends Model {
             });
         });
     }
-
 }
 
 // create fields/columns for Post model
