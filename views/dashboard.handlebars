@@ -11,19 +11,23 @@
                 <label for="post-content">Content</label>
                 <textarea id="post-content" name="post-content"></textarea>
             </div>
-            <button type="submit" class="new-post-btn">Create</button>
+            <div class="form-btn-container">
+                <button type="submit" class="new-post-btn form-btn">Create</button>
+            </div>
         </form>
     </section>
 </div>
 
 {{#if posts.length}}
-<section>
-    <h2>Your Posts</h2>
+<section id="your-posts">
+    <h2 class="section-title">Your Posts</h2>
     <ol>
         {{#each posts as |post|}}
         <li>
             {{> post-info post}}
-            <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+            <div class="edit-container">
+                <a href="/dashboard/edit/{{post.id}}" class="edit-link nochange">Edit post</a>
+            </div>
         </li>
         {{/each}}
     </ol>

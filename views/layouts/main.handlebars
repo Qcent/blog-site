@@ -12,23 +12,33 @@
 <body>
     <div class="wrapper">
         <header>
-            <nav>
-                <a href="/">Home</a>
-                {{#if session.loggedIn}}
-                <a href="/dashboard">Dashboard</a>
-                <a href='#' id="logout" class="btn-no-style">Logout</a>
-                {{else}}
-                <a href="/login">Login</a>
-                {{/if}}
-            </nav>
-            <div>
+            <section id="navTitle">
+                <nav>
+                    <a href="/">Home</a>
+                    {{#if session.loggedIn}}
+                    <a href="/dashboard">Dashboard</a>
+                    <a href='#' id="logout" class="btn-no-style">Logout</a>
+                    {{else}}
+                    <a href="/login">Login</a>
+                    {{/if}}
+                </nav>
                 <h1>
                     <a class='title' href="/">The Blog Site</a>
                 </h1>
                 {{#if session.loggedIn}}
                 Welcome {{session.username}}
                 {{/if}}
-            </div>
+            </section>
+            <section>
+                <div id="myAccount">
+                    {{#if session.loggedIn}}
+                    <div id='myProfile'>
+                        <img src="https://www.svgrepo.com/show/5319/user.svg" />
+                        <a class="nochange" href="/user/{{session.user_id}}">My Profile</a>
+                    </div>
+                    {{/if}}
+                </div>
+            </section>
         </header>
         <main>
             {{{ body }}}

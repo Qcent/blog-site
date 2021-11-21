@@ -1,15 +1,7 @@
 {{> post-info post}}
 
 {{#if session.loggedIn}}
-<form class="comment-form">
-    <div>
-        Add Comment
-        <textarea id="comment-body" name="comment-body"></textarea>
-    </div>
-    <div>
-        <button class='add-comment-btn' type="submit">add comment</button>
-    </div>
-</form>
+{{> comment-form}}
 {{/if}}
 {{> comments post.comments}}
 {{#if session.loggedIn}}

@@ -2,14 +2,14 @@
     <div class="post-container">
         <div class="post-head">{{user.username}} on {{format_date created_at}}</div>
         {{#unless view}}
-        <a class='post-link' href="/post/{{id}}" target="_blank">
+        <a class='post-link' href="/post/{{id}}">
             {{/unless}}
             <section class="post-body">
                 <h2 class="title">
                     {{title}}
                 </h2>
                 <p class="content">
-                    {{ post_content}}
+                    {{{post_content}}}
                 </p>
             </section>
             {{#unless view}}

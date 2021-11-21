@@ -49,6 +49,11 @@ User.init({
             // this means the password must be at least four characters long
             len: [4]
         }
+    },
+    // define a bio column
+    user_bio: {
+        type: DataTypes.TEXT,
+        allowNull: true,
     }
 }, {
     hooks: {
@@ -67,8 +72,8 @@ User.init({
     // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
     // pass in our imported sequelize connection (the direct connection to our database)
     sequelize,
-    // don't automatically create createdAt/updatedAt timestamp fields
-    timestamps: false,
+    // automatically create createdAt/updatedAt timestamp fields
+    timestamps: true,
     // don't pluralize name of database table
     freezeTableName: true,
     // use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)

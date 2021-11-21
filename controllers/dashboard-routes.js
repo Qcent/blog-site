@@ -52,7 +52,8 @@ router.get('/edit/:id', withAuth, (req, res) => {
                 'id',
                 'post_content',
                 'title',
-                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
             ],
             include: [{
                     model: Comment,

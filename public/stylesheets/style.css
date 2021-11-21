@@ -15,7 +15,7 @@ html {
 }
 
 header {
-    padding: 2rem 9rem 0;
+    padding: .8rem 1rem 0 9rem;
     height: 8rem;
     background-color: #ADC2A9;
     margin-bottom: 2rem;
@@ -24,8 +24,36 @@ header {
     background-position-x: .5%;
 }
 
+header h1 {
+    margin-top: .8rem;
+    font-size: 2.3rem;
+}
+
 header .title {
     color: rgb(39, 105, 204);
+}
+
+header section {
+    display: inline-block;
+    vertical-align: top;
+    width: 49.5%;
+}
+
+#myAccount {
+    display: flex;
+    justify-content: right;
+}
+
+#myProfile {
+    width: 5rem;
+    text-align: center;
+}
+
+#myAccount img {
+    display: block;
+    margin: auto;
+    width: 4.8rem;
+    height: 4.8rem;
 }
 
 nav a {
@@ -38,6 +66,11 @@ nav a:visited {
     color: rgb(95, 147, 226);
 }
 
+nav a:hover {
+    color: rgb(164, 187, 221);
+    text-shadow: 0 0 8px rgba(2, 2, 2, .8);
+}
+
 header h1 a {
     text-decoration: none;
     margin-top: .5rem;
@@ -45,6 +78,7 @@ header h1 a {
 
 .login-container,
 .new-post-container,
+.edit-post-container,
 .post-container {
     margin: 1rem auto;
     width: 75vw;
@@ -85,6 +119,7 @@ a:hover>.post-body {
     border-radius: 3px;
 }
 
+.edit-post-container .title,
 .login-body .title,
 .post-body .title {
     padding: .3rem;
@@ -151,7 +186,6 @@ footer {
 .user-login-btn {
     margin-left: 14.5rem;
     margin-bottom: 1rem;
-    padding: .4rem 2rem;
 }
 
 .content.user-login div {
@@ -163,6 +197,8 @@ footer {
 .content.user-login label {
     text-align: right;
     width: 18%;
+    position: relative;
+    top: .35rem;
 }
 
 .content.user-login input {
@@ -197,6 +233,17 @@ footer {
     margin-left: 1rem;
 }
 
+input,
+label {
+    vertical-align: bottom;
+}
+
+input,
+textarea {
+    font-family: sans-serif;
+    padding: .3rem;
+}
+
 .new-post-form #post-content {
     width: 30rem;
     height: 10rem;
@@ -206,7 +253,6 @@ footer {
 
 .new-post-btn {
     margin: 1rem 17rem;
-    padding: .4rem 2rem;
 }
 
 
@@ -231,7 +277,6 @@ footer {
 
 .add-comment-btn {
     margin: 1rem 19rem;
-    padding: .4rem 2rem;
 }
 
 
@@ -252,4 +297,88 @@ footer {
 
 .comment .text {
     padding: .1rem 1.5rem;
+}
+
+
+/* DASHBOARD */
+
+.edit-container {
+    text-align: right;
+    padding: .2rem 1rem;
+    margin: -1rem auto .2rem;
+    width: 75vw;
+    max-width: 800px;
+    background-color: #D3E4CD;
+    border: 1px solid #99A799;
+    border-top: 0;
+    border-radius: 3px;
+}
+
+.edit-container .nochange:hover {
+    color: #E60D3F;
+}
+
+#your-posts .section-title {
+    width: 85%;
+    margin: auto;
+    border-bottom: 3px solid #99A799;
+}
+
+
+/* EDIT POST */
+
+.edit-meta {
+    text-align: right;
+    padding-right: .3rem;
+}
+
+.edit-post-container {
+    width: 40rem;
+}
+
+.edit-post-form {
+    padding-top: 1rem;
+}
+
+.edit-post-form div {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+
+.edit-post-form label {
+    text-align: right;
+    width: 6rem;
+}
+
+.edit-post-form input {
+    width: 45%;
+    margin-left: 1rem;
+}
+
+.edit-post-form #post-content {
+    width: 30rem;
+    height: 10rem;
+    margin-left: 1rem;
+    resize: none;
+}
+
+.form-btn-container {
+    display: flex;
+    justify-content: center !important;
+}
+
+.form-btn {
+    padding: .4rem 2rem;
+    margin: .1rem .2rem;
+}
+
+
+/* EDIT USER */
+
+.edit-form textarea {
+    margin-left: 1rem;
+    width: 18rem;
+    height: 4rem;
+    resize: none;
 }

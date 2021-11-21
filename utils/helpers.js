@@ -9,5 +9,9 @@ module.exports = {
     format_plural: (word, num) => {
         if (num > 1 || num === 0) return word + 's';
         return word;
+    },
+    ifEquals: (arg1, arg2) => {
+        console.log(arg1, arg2);
+        return arg1 == arg2;
     }
 }

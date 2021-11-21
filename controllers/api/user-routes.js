@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const session = require('express-session');
 const { User, Post, Vote, Comment } = require('../../models');
 
 const withAuth = require('../../utils/auth');
@@ -123,25 +124,66 @@ router.post('/login', (req, res) => {
 
 // PUT /api/users/1
 router.put('/:id', withAuth, (req, res) => {
+    if (req.session.user_id == req.params.id) {
+        if (req.body.password) {
+            User.update({
+                    username: req.body.username,
+                    email: req.body.email,
+                    user_bio: req.body.user_bio,
+                    password: req.body.password
+                }, {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(dbUserData => {
+                    if (!dbUserData[0]) {
+                        res.status(404).json({ message: 'No user found with this id' });
+                        return;
+                    }
+                    console.log(req.body)
+                    req.session.save(() => {
+                        req.session.username = req.body.username;
 
-    // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
-    User.update(req.body, {
-            individualHooks: true,
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(dbUserData => {
-            if (!dbUserData[0]) {
-                res.status(404).json({ message: 'No user found with this id' });
-                return;
-            }
-            res.json(dbUserData);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+                        res.json(dbUserData);
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
+                });
+        } else {
+            User.update({
+                    username: req.body.username,
+                    email: req.body.email,
+                    user_bio: req.body.user_bio
+                }, {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(dbUserData => {
+                    if (!dbUserData[0]) {
+                        res.status(404).json({ message: 'No user found with this id' });
+                        return;
+                    }
+                    console.log(req.body)
+                    req.session.save(() => {
+                        req.session.username = req.body.username;
+
+                        res.json(dbUserData);
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
+                });
+        }
+    } else {
+        const err = `Unauthorized Edit`;
+        console.log(err);
+        res.status(500).json(err);
+    }
 });
 
 // DELETE /api/users/1
