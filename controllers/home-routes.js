@@ -8,7 +8,8 @@ router.get('/', (req, res) => {
     Post.findAll({
             attributes: [
                 'id',
-                'post_content',
+                //'post_content',
+                [sequelize.literal('(SUBSTRING(post_content, 1, 225) )'), 'post_content'],
                 'title',
                 'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
