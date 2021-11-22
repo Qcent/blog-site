@@ -1,3 +1,4 @@
+{{> sortby}}
 <section class="post-list">
     {{#each posts as |post|}}
 
@@ -5,6 +6,7 @@
 
     {{/each}}
 </section>
+<script src="/javascript/sortby.js"></script>
 {{#if session.loggedIn}}
 <script src="/javascript/upvote.js"></script>
 {{/if}}

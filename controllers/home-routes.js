@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
                 'id',
                 'post_content',
                 'title',
-                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
             ],
             include: [{
@@ -25,6 +25,10 @@ router.get('/', (req, res) => {
                     model: User,
                     attributes: ['username']
                 }
+            ],
+            limit: 10,
+            order: [
+                ['updated_at', 'DESC']
             ]
         })
         .then(dbPostData => {
@@ -104,6 +108,72 @@ router.get('/signup', (req, res) => {
         return;
     }
     res.render('signup');
+});
+
+/* for returning the posts with diferent sorts */
+router.get('/:sort', (req, res) => {
+    let sortby = '';
+    let direction = 'DESC';
+
+    switch (req.params.sort) {
+        case '1':
+            sortby = 'updated_at'
+            break;
+        case '2':
+            sortby = 'updated_at'
+            direction = 'ASC';
+            break;
+        case '3':
+            sortby = sequelize.literal('pos_count');
+            break;
+        case '4':
+            sortby = sequelize.literal('neg_count');
+            break;
+        case '5':
+            sortby = sequelize.col('comment_count');
+            break;
+        default:
+            sortby = 'updated_at'
+            break;
+    }
+    Post.findAll({
+            attributes: [
+                'id',
+                'post_content',
+                'title',
+                'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
+            ],
+            include: [{
+                    model: Comment,
+                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count']],
+                    include: {
+                        model: User,
+                        attributes: ['username']
+                    }
+                },
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ],
+            limit: 15,
+            order: [
+                [sortby, direction]
+            ]
+        })
+        .then(dbPostData => {
+            const posts = dbPostData.map(post => post.get({ plain: true }));
+
+            res.render('homepage', {
+                posts,
+                session: req.session
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 module.exports = router;
