@@ -10,7 +10,7 @@ module.exports = {
         if (Difference_In_Hours < 1) return `${Difference_In_Minutes.toFixed(0)}m old`;
         if (Difference_In_Hours < 48) return `${Difference_In_Hours.toFixed(0)}h old`;
 
-        return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`;
+        return `on ${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`;
     },
 
     format_plural: (word, num) => {
