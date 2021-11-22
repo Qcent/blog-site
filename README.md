@@ -24,7 +24,7 @@ http://qcent-blog-site.herokuapp.com/
 
 ## Installation
 
-This project requires that Node.js be installed on the target machine and that is has write access to a MySQL server.  
+This project requires that Node.js be installed on the target machine and that the user has write access to a MySQL server.  
 1. Copy the repository files and then run `npm i` to install all required dependencies.  
 2. In the root directory, create and edit a `.env` file (see Fig.1 below) to reflect the login credentials and network path and port required to access your MySQL server. 
 3. Login to your MySQL server and `CREATE DATABASE blog_site_db` then logout.  
