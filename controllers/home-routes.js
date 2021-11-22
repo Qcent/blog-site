@@ -129,9 +129,11 @@ router.get('/:sort', (req, res) => {
         case '4':
             sortby = sequelize.literal('neg_count');
             break;
-        case '5':
-            sortby = sequelize.col('comment_count');
-            break;
+            /*      
+                        case '5':
+                        sortby = sequelize.col('comment_count');
+                        break;
+            */
         default:
             sortby = 'updated_at'
             break;
