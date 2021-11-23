@@ -280,7 +280,7 @@ textarea {
 
 #comment-body {
     width: 100%;
-    height: 10rem;
+    height: 6rem;
     padding: .2rem;
     resize: none;
 }
@@ -291,6 +291,13 @@ textarea {
 
 
 /* COMMENTS */
+
+.comments {
+    margin: 0 auto;
+    width: 85%;
+    max-height: 18rem;
+    overflow: auto;
+}
 
 .comments .comment {
     margin: .1rem auto;
@@ -328,7 +335,7 @@ textarea {
     color: #E60D3F;
 }
 
-#your-posts .section-title {
+.section-title {
     width: 85%;
     margin: auto;
     border-bottom: 3px solid #99A799;

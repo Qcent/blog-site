@@ -1,9 +1,11 @@
 {{> post-info post}}
 
+{{> comments post.comments}}
+
 {{#if session.loggedIn}}
 {{> comment-form}}
 {{/if}}
-{{> comments post.comments}}
+
 {{#if session.loggedIn}}
 <script src="/javascript/comment.js"></script>
 <script src="/javascript/upvote.js"></script>

@@ -1,12 +1,15 @@
-<div class="comments">
-    {{#each this}}
-    <section class="comment">
-        <div class="meta">
-            <a href='/user/{{user.id}}'> {{user.username}} </a>{{format_date created_at}}
-        </div>
-        <div class="text">
-            {{comment_text}}
-        </div>
-    </section>
-    {{/each}}
-</div>
+<section>
+    <h2 class="section-title">Comments</h2>
+    <div class="comments">
+        {{#each this}}
+        <section class="comment">
+            <div class="meta">
+                <a href='/user/{{user.id}}'>{{user.username}}</a> {{format_date created_at}}
+            </div>
+            <div class="text">
+                {{comment_text}}
+            </div>
+        </section>
+        {{/each}}
+    </div>
+</section>
