@@ -9,9 +9,11 @@ router.get('/', (req, res) => {
             attributes: [
                 'id',
                 //'post_content',
+                [sequelize.literal('CHAR_LENGTH(post_content)'), 'post_length'],
                 [sequelize.literal('(SUBSTRING(post_content, 1, 225) )'), 'post_content'],
                 'title',
-                'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                'created_at',
+                'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
             ],
@@ -137,7 +139,9 @@ router.get('/:sort', (req, res) => {
     Post.findAll({
             attributes: [
                 'id',
-                'post_content',
+                //'post_content',
+                [sequelize.literal('CHAR_LENGTH(post_content)'), 'post_length'],
+                [sequelize.literal('(SUBSTRING(post_content, 1, 225) )'), 'post_content'],
                 'title',
                 'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],

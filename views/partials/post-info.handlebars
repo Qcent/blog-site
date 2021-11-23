@@ -11,6 +11,9 @@
                 </h2>
                 <p class="content">
                     {{{post_content}}}
+                    {{#if (ifTruncated post_length)}}
+                    <span class="nochange"> ... read more</span>
+                    {{/if}}
                 </p>
             </section>
             {{#unless view}}
