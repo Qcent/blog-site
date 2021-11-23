@@ -24,6 +24,9 @@ router.get('/:id', withAuth, (req, res) => {
                         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND vote.positive )'), 'pos_count'],
                     ],
                     include: [{
+                        model: User,
+                        attributes: ['id', 'username'],
+                    }, {
                         model: Comment,
                         attributes: ['id'],
                     }]
