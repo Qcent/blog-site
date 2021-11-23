@@ -5,7 +5,7 @@ const withAuth = require('../utils/auth');
 
 
 //get specific user by id
-router.get('/:id', withAuth, (req, res) => {
+router.get('/:id', (req, res) => {
     User.findOne({
             where: {
                 id: req.params.id
@@ -15,13 +15,12 @@ router.get('/:id', withAuth, (req, res) => {
                 'username',
                 'user_bio',
                 'email',
-                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND NOT vote.positive)'), 'neg_count'],
-                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND vote.positive )'), 'pos_count'],
+                'created_at'
             ],
             include: [{
                     model: Post,
-                    attributes: ['id', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND NOT vote.positive)'), 'neg_count'],
-                        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND vote.positive )'), 'pos_count'],
+                    attributes: ['id', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE posts.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE posts.id = vote.post_id AND vote.positive)'), 'pos_count'],
                     ],
                     include: [{
                         model: User,

@@ -26,7 +26,10 @@ router.get('/:id', (req, res) => {
             },
             include: [{
                     model: Post,
-                    attributes: ['id', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE posts.id = comment.post_id )'), 'comment_count'], ]
+                    attributes: ['id', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE posts.id = comment.post_id )'), 'comment_count'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE posts.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE posts.id = vote.post_id AND vote.positive)'), 'pos_count'],
+                    ]
                 },
                 // include the Comment model here:
                 {
