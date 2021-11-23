@@ -138,39 +138,4 @@ router.get('/:sort', (req, res) => {
         });
 });
 
-router.get('/:sort', withAuth, (req, res) => {
-    Post.findAll({
-            where: {
-                // use the ID from the session
-                user_id: req.session.user_id
-            },
-            attributes: [
-                'id',
-                'post_content',
-                'title',
-                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
-                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
-                [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
-            ],
-            include: [{
-                    model: Comment,
-                    attributes: ['id'],
-                },
-                {
-                    model: User,
-                    attributes: ['username', 'id']
-                }
-            ],
-        })
-        .then(dbPostData => {
-            // serialize data before passing to template
-            const posts = dbPostData.map(post => post.get({ plain: true }));
-            res.render('dashboard', { posts, session: req.session });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-
-});
 module.exports = router;
