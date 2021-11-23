@@ -18,6 +18,7 @@ http://qcent-blog-site.herokuapp.com/
 * [Table of Contents](#table-of-contents)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Credits](#credits)
 * [Contributing](#contributing)
 * [Questions](#questions)
 * [License](#license)
@@ -26,9 +27,10 @@ http://qcent-blog-site.herokuapp.com/
 
 This project requires that Node.js be installed on the target machine and that the user has write access to a MySQL server.  
 1. Copy the repository files and then run `npm i` to install all required dependencies.  
-2. In the root directory, create and edit a `.env` file (see Fig.1 below) to reflect the login credentials and network path and port required to access your MySQL server. 
-3. Login to your MySQL server and `CREATE DATABASE blog_site_db` then logout.  
-4. (optional) To seed the database with testing data type `npm run seed` 
+2. In the root directory, create and edit a `.env` file (see Fig.1 below) to reflect the login credentials required to access your MySQL server. 
+3. Open the `./config/connection.js` file in your favorite text editor and set the sequelize settings for `host`,`dialect`, and `port` as needed to connect to your SQL server.
+4. Login to your MySQL server and `CREATE DATABASE blog_site_db` then logout.  
+5. (optional) To seed the database with testing data type `npm run seed` 
 
 ![Fig.1](./assets/screenshots/dotenv-config.png)
 Fig.1
@@ -37,6 +39,10 @@ Fig.1
 
 Once the project has been installed and configured as outlined above, you can run the server by typing `node server.js` or `npm start`.  
 Then navigate to the network path:port of the server and browse the posts or create an account and post some thoughts of your own.  
+
+## Credits
+
+Special Thanks to [SVGrepo.com](https://svgrepo.com) for providing all the images used on this site.
 
 ## Contributing
 
