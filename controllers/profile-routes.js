@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Comment } = require('../models');
+const { Post, User, Comment, Vote } = require('../models');
 const withAuth = require('../utils/auth');
 
 
@@ -17,6 +17,34 @@ router.get('/:id', withAuth, (req, res) => {
                 'email',
                 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND vote.positive )'), 'pos_count'],
+            ],
+            include: [{
+                    model: Post,
+                    attributes: ['id', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND NOT vote.positive)'), 'neg_count'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE user.id = vote.user_id AND vote.positive )'), 'pos_count'],
+                    ],
+                    include: [{
+                        model: Comment,
+                        attributes: ['id'],
+                    }]
+                },
+                {
+                    model: Comment,
+                    attributes: ['id', 'comment_text', 'created_at'],
+                    include: {
+                        model: Post,
+                        attributes: ['title', 'id']
+                    }
+                },
+                {
+                    model: Post,
+                    attributes: ['title', 'id'],
+                    through: Vote,
+                    as: 'voted_posts'
+                }
+            ],
+            order: [
+                [Post, 'created_at', 'DESC']
             ]
         })
         .then(dbUserData => {

@@ -37,35 +37,51 @@
             </div>
         </form>
     </section>
-    <script src="/javascript/edit-user.js"></script>
+</div>
+<script src="/javascript/edit-user.js"></script>
 
-    {{else}}
+{{else}}
 
-    <div class="login-container">
-        <section class="login-body">
-            <form class="edit-form">
-                <h2 class="title">
-                    User Info
-                </h2>
-                <div class="content user-login">
-                    <div>
-                        <label for="username-edit">name:</label>
-                        <input type="text" id="username-edit" value="{{user.username}}" readonly />
-                    </div>
-                    <div>
-                        <label for="email-edit">email:</label>
-                        <input type="password" id="email-edit" value="{{user.email}}" readonly />
-                    </div>
-                    <div>
-                        <label for="user-joined">joined:</label>
-                        <input type="text" id="user-joined" value="{{format_date user.created_at}}" readonly />
-                    </div>
-                    <div>
-                        <label for="bio-edit">bio:</label>
-                        <textarea id="bio-edit" readonly>{{user.user_bio}}</textarea>
-                    </div>
+<div class="login-container">
+    <section class="login-body">
+        <form class="edit-form">
+            <h2 class="title">
+                User Info
+            </h2>
+            <div class="content user-login">
+                <div>
+                    <label for="username-edit">name:</label>
+                    <input type="text" id="username-edit" value="{{user.username}}" readonly />
                 </div>
-            </form>
-        </section>
-        {{/if}}
-        {{/if}}
+                <div>
+                    <label for="email-edit">email:</label>
+                    <input type="password" id="email-edit" value="{{user.email}}" readonly />
+                </div>
+                <div>
+                    <label for="user-joined">joined:</label>
+                    <input type="text" id="user-joined" value="{{format_date user.created_at}}" readonly />
+                </div>
+                <div>
+                    <label for="bio-edit">bio:</label>
+                    <textarea id="bio-edit" readonly>{{user.user_bio}}</textarea>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+{{/if}}
+{{/if}}
+
+{{#if user.posts.length}}
+<section id="your-posts">
+    <h2 class="section-title">Post History</h2>
+    <!-- {{> sortby}} -->
+    <ol>
+        {{#each user.posts as |post|}}
+        <li>
+            {{> post-info post}}
+        </li>
+        {{/each}}
+    </ol>
+</section>
+{{/if}}

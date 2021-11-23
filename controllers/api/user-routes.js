@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const session = require('express-session');
+const sequelize = require('../../config/connection');
 const { User, Post, Vote, Comment } = require('../../models');
 
 const withAuth = require('../../utils/auth');
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
             },
             include: [{
                     model: Post,
-                    attributes: ['id', 'title', 'post_content', 'created_at']
+                    attributes: ['id', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE posts.id = comment.post_id )'), 'comment_count'], ]
                 },
                 // include the Comment model here:
                 {
@@ -34,12 +34,12 @@ router.get('/:id', (req, res) => {
                     attributes: ['id', 'comment_text', 'created_at'],
                     include: {
                         model: Post,
-                        attributes: ['title']
+                        attributes: ['title', 'id']
                     }
                 },
                 {
                     model: Post,
-                    attributes: ['title'],
+                    attributes: ['title', 'id'],
                     through: Vote,
                     as: 'voted_posts'
                 }
