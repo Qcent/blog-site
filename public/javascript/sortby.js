@@ -1,8 +1,9 @@
 async function sortByHandler(event) {
 
     const value = event.target.value;
+    const route = window.location.toString().split('/')[window.location.toString().split('/').length - 1] + '/'
 
-    document.location.replace('/' + value);
+    document.location.replace('/' + route + value);
 }
 let listValue = window.location.toString().split('/')[window.location.toString().split('/').length - 1] > 5 ? '' : window.location.toString().split('/')[window.location.toString().split('/').length - 1] || '1';
 if (!listValue || listValue > 5) listValue = 1;

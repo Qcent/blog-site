@@ -21,6 +21,7 @@
 {{#if posts.length}}
 <section id="your-posts">
     <h2 class="section-title">Your Posts</h2>
+    {{> sortby}}
     <ol>
         {{#each posts as |post|}}
         <li>
@@ -35,3 +36,4 @@
 {{/if}}
 
 <script src="/javascript/add-post.js"></script>
+<script src="/javascript/sortby.js"></script>

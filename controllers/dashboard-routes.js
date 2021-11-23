@@ -19,14 +19,9 @@ router.get('/', withAuth, (req, res) => {
                 [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
             ],
             include: [{
-                    model: Comment,
-                    attributes: ['id'],
-                },
-                {
-                    model: User,
-                    attributes: ['username', 'id']
-                }
-            ],
+                model: Comment,
+                attributes: ['id'],
+            }],
         })
         .then(dbPostData => {
             // serialize data before passing to template
@@ -39,6 +34,7 @@ router.get('/', withAuth, (req, res) => {
         });
 
 });
+
 
 router.get('/edit/:id', withAuth, (req, res) => {
     Post.findOne({
@@ -84,4 +80,97 @@ router.get('/edit/:id', withAuth, (req, res) => {
         });
 });
 
+/* for returning the posts with diferent sorts */
+router.get('/:sort', (req, res) => {
+    let sortby = '';
+    let direction = 'DESC';
+
+    switch (req.params.sort) {
+        case '1':
+            sortby = 'created_at'
+            break;
+        case '2':
+            sortby = 'created_at'
+            direction = 'ASC';
+            break;
+        case '3':
+            sortby = sequelize.literal('pos_count');
+            break;
+        case '4':
+            sortby = sequelize.literal('neg_count');
+            break;
+        case '5':
+            sortby = sequelize.col('comment_count');
+            break;
+        default:
+            sortby = 'created_at'
+            break;
+    }
+    Post.findAll({
+            where: {
+                // use the ID from the session
+                user_id: req.session.user_id
+            },
+            attributes: [
+                'id',
+                'post_content',
+                'title',
+                'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
+            ],
+            include: [{
+                model: Comment,
+                attributes: ['id'],
+            }],
+            limit: 15,
+            order: [
+                [sortby, direction]
+            ]
+        })
+        .then(dbPostData => {
+            const posts = dbPostData.map(post => post.get({ plain: true }));
+            res.render('dashboard', { posts, session: req.session });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+router.get('/:sort', withAuth, (req, res) => {
+    Post.findAll({
+            where: {
+                // use the ID from the session
+                user_id: req.session.user_id
+            },
+            attributes: [
+                'id',
+                'post_content',
+                'title',
+                'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
+            ],
+            include: [{
+                    model: Comment,
+                    attributes: ['id'],
+                },
+                {
+                    model: User,
+                    attributes: ['username', 'id']
+                }
+            ],
+        })
+        .then(dbPostData => {
+            // serialize data before passing to template
+            const posts = dbPostData.map(post => post.get({ plain: true }));
+            res.render('dashboard', { posts, session: req.session });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+
+});
 module.exports = router;
