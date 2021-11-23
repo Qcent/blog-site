@@ -13,23 +13,20 @@ router.get('/', (req, res) => {
                 'title',
                 'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
             ],
             include: [{
                     model: Comment,
-                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-                    include: {
-                        model: User,
-                        attributes: ['username', 'id']
-                    }
+                    attributes: ['id'],
                 },
                 {
                     model: User,
                     attributes: ['username', 'id']
                 }
             ],
-            limit: 10,
+            limit: 15,
             order: [
-                ['updated_at', 'DESC']
+                ['created_at', 'DESC']
             ]
         })
         .then(dbPostData => {
@@ -118,10 +115,10 @@ router.get('/:sort', (req, res) => {
 
     switch (req.params.sort) {
         case '1':
-            sortby = 'updated_at'
+            sortby = 'created_at'
             break;
         case '2':
-            sortby = 'updated_at'
+            sortby = 'created_at'
             direction = 'ASC';
             break;
         case '3':
@@ -130,13 +127,11 @@ router.get('/:sort', (req, res) => {
         case '4':
             sortby = sequelize.literal('neg_count');
             break;
-            /*      
-                        case '5':
-                        sortby = sequelize.col('comment_count');
-                        break;
-            */
+        case '5':
+            sortby = sequelize.col('comment_count');
+            break;
         default:
-            sortby = 'updated_at'
+            sortby = 'created_at'
             break;
     }
     Post.findAll({
@@ -146,14 +141,11 @@ router.get('/:sort', (req, res) => {
                 'title',
                 'created_at', 'updated_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
             ],
             include: [{
                     model: Comment,
-                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count']],
-                    include: {
-                        model: User,
-                        attributes: ['username', 'id']
-                    }
+                    attributes: ['id'],
                 },
                 {
                     model: User,

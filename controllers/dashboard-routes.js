@@ -16,20 +16,17 @@ router.get('/', withAuth, (req, res) => {
                 'title',
                 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND NOT vote.positive)'), 'neg_count'],
                 [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id AND vote.positive)'), 'pos_count'],
+                [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id )'), 'comment_count'],
             ],
             include: [{
                     model: Comment,
-                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-                    include: {
-                        model: User,
-                        attributes: ['username', 'id']
-                    }
+                    attributes: ['id'],
                 },
                 {
                     model: User,
                     attributes: ['username', 'id']
                 }
-            ]
+            ],
         })
         .then(dbPostData => {
             // serialize data before passing to template
